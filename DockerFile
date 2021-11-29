@@ -1,0 +1,14 @@
+FROM  prom/prometheus:latest
+
+COPY ./prometheus.yml  /etc/prometheus/prometheus.yml
+COPY ./web.yml  /etc/prometheus/web.yml
+
+
+WORKDIR /prometheus
+
+EXPOSE     9090
+VOLUME     [ "/prometheus" ]
+ENTRYPOINT [ "/bin/prometheus" ]
+CMD        [ "--config.file=/etc/prometheus/prometheus.yml", \
+             "--web.config.file=/etc/prometheus/web.yml", \
+			 "--web.enable-lifecycle"]
